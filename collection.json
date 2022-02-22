@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "c0ee5745-1885-40ff-9400-855aff4a70fb",
+		"name": "PROD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Applicant Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"The body of the response is a valid XML\", function () {\r",
+							"     pm.expect(xml2Json(responseBody)).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"var jsonObject = xml2Json(responseBody);\r",
+							"tests[\"Verify First Name\"] = jsonObject['StudentDetails'].FirstName === \"Meha\";\r",
+							"tests[\"Verify Emapl ID\"] = jsonObject['StudentDetails'].StudentID === \"2494833\";\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://integration.capella.edu/PSIGW/RESTListeningConnector/PSFT_CS/CU_AEM_STDNT_APPL.v1/studentdetails/:StudentID",
+					"protocol": "http",
+					"host": [
+						"integration",
+						"capella",
+						"edu"
+					],
+					"path": [
+						"PSIGW",
+						"RESTListeningConnector",
+						"PSFT_CS",
+						"CU_AEM_STDNT_APPL.v1",
+						"studentdetails",
+						":StudentID"
+					],
+					"variable": [
+						{
+							"key": "StudentID",
+							"value": "2494833"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Checklist API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The body of the response is a valid XML\", function () {\r",
+							"     pm.expect(xml2Json(responseBody)).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"var jsonObject = xml2Json(responseBody);\r",
+							"tests[\"Verify Emapl ID\"] = jsonObject['GetChecklist'].StudentID === \"2494833\";\r",
+							"tests[\"Verify Application Number\"] = jsonObject['GetChecklist']['Application']['ApplicationDetails'].ApplicationNbr === \"00935669\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://integration.capella.edu/PSIGW/RESTListeningConnector/PSFT_CS/CU_AEM_CHECKLIST.v1/checklist/:StudentID",
+					"protocol": "http",
+					"host": [
+						"integration",
+						"capella",
+						"edu"
+					],
+					"path": [
+						"PSIGW",
+						"RESTListeningConnector",
+						"PSFT_CS",
+						"CU_AEM_CHECKLIST.v1",
+						"checklist",
+						":StudentID"
+					],
+					"variable": [
+						{
+							"key": "StudentID",
+							"value": "2494833"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
